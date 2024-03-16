@@ -1,0 +1,154 @@
+<template>
+  <div id="app">
+    <!-- Views/Tabs container -->
+    <div class="views tabs safe-areas">
+      <!-- Tabbar for switching views-tabs -->
+      <div class="toolbar toolbar-bottom tabbar-labels">
+        <div class="toolbar-inner">
+          <a href="#view-home" class="tab-link tab-link-active">
+            <i class="icon t4-icons if-not-md">chevron_left_slash_chevron_right</i>
+            <i class="icon material-icons if-md">code</i>
+            <span class="tabbar-label">Проєкти</span>
+          </a>
+          <a href="#view-friendship" class="tab-link">
+            <i class="icon t4-icons if-not-md">person_3_fill</i>
+            <i class="icon material-icons if-md">groups_3</i>
+            <span class="tabbar-label">Друзі</span>
+          </a>
+          <a href="#view-messages" class="tab-link">
+            <i class="icon t4-icons if-not-md">quote_bubble</i>
+            <i class="icon material-icons if-md">message</i>
+            <span class="tabbar-label">Повідомлення</span>
+          </a>
+          <a href="#view-settings" class="tab-link">
+            <i class="icon t4-icons if-not-md">gear</i>
+            <i class="icon material-icons if-md">settings</i>
+            <span class="tabbar-label">Налаштування</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Your main view/tab, should have "view-main" class. It also has "tab-active" class -->
+      <div id="view-home" class="view view-main view-init tab tab-active" data-url="/">
+        <!-- Home page will be loaded here dynamically from / route -->
+      </div>
+
+      <!-- Catalog View -->
+      <div id="view-friendship" class="view view-init tab" data-name="catalog" data-url="/friendship/">
+        <!-- Catalog page will be loaded here dynamically from /catalog/ route -->
+      </div>
+
+      <!-- Settings View -->
+      <div id="view-messages" class="view view-init tab" data-name="settings" data-url="/messages/">
+        <!-- Settings page will be loaded here dynamically from /settings/ route -->
+      </div>
+
+      <div id="view-settings" class="view view-init tab" data-name="settings" data-url="/settings/">
+        <!-- Settings page will be loaded here dynamically from /settings/ route -->
+      </div>
+    </div>
+
+
+    <!-- Popups -->
+    <div class="popup" id="logcat">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner">
+              <div class="title">Debuggero Logcat</div>
+              <div class="right">
+                <a class="link popup-close">Close</a>
+              </div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="list media-list no-hairlines">
+              <ul id="logcat-output"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Login Screen -->
+    <div class="login-screen" id="login-screen">
+      <div class="view">
+        <div class="page">
+          <div class="page-content login-screen-content">
+            <div class="login-screen-title">Вхід до Техно Чарівника</div>
+            <div class="list">
+              <ul>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">Публічна адреса</div>
+                    <div class="item-input-wrap">
+                      <input type="text" id="username" placeholder="Публічна адреса" />
+
+                    </div>
+                  </div>
+                </li>
+                <li class="item-content item-input">
+                  <div class="item-inner">
+                    <div class="item-title item-label">Секретна фраза</div>
+                    <div class="item-input-wrap">
+                      <input type="password" id="password" placeholder="Секретна фраза" />
+
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="buttons-list">
+              <ul>
+                <li>
+                  <button class="item-link list-button button button-fill button-round button-large color-green text-color-black login-button" @click="${scanner}">
+                    <i class="icon t4-icons if-not-md">qrcode</i>
+                    <i class="icon material-icons if-md">qr_code</i>
+                    Сканер
+                  </button>
+
+                  <button class="item-link list-button button button-fill button-round button-large color-lime text-color-black login-button" @click="${login}">
+                    <i class="icon t4-icons if-not-md">person_crop_circle_fill_badge_checkmark</i>
+                    <i class="icon material-icons if-md">check</i>
+                    Вхід</button>
+                </li>
+              </ul>
+              <div class="block-footer">Увійдіть з даними, які ви знайдете в особистому кабінеті на сайті https://techno4.online.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</template>
+<script>
+  import debuggero from './js/debuggero.js'
+  import wizardrobot from './js/wizardrobot.js'
+  import platform from './js/platform.js'
+
+  export default (props, { $, $on, $update, $store }) => {
+    $on('page:mounted', () => {
+      $('#username').val(localStorage.getItem('userKey'))
+      $('#password').val(localStorage.getItem('userSecret'))
+    })
+
+    const login = () => {
+      localStorage.setItem('userKey', $('#username').val())
+      localStorage.setItem('userSecret', $('#password').val())
+      wizardrobot.login()
+    }
+
+    const scanner = () => {
+      platform.scanner.scan('Помістіть код у зону сканування', scannerResulHandler)
+    }
+
+    const scannerResulHandler = (result) => {
+      let username = result.text.replace('TECHNO4LOGIN::', '')
+      $('#username').val(username)
+    }
+
+    return $render
+  }
+</script>

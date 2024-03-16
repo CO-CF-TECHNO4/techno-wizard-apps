@@ -1,0 +1,126 @@
+/* iOS Cordova Tweak */
+.device-cordova.device-ios {
+  height: 100vh;
+}
+
+/* Custom color theme properties */
+:root {
+  --t4-theme-color: #37ac8b;
+  --t4-theme-color-rgb: 55, 172, 139;
+  --t4-theme-color-shade: #2d8d72;
+  --t4-theme-color-tint: #47c4a1;
+}
+
+/* Your app custom styles here */
+.actions-modal {
+  width: 880px !important;
+  border-radius: 80px 80px 0px 0px !important;
+  left: calc((50% - 440px)) !important;
+  margin-left: unset !important;
+}
+.actions-group,
+.actions-button {
+  overflow: unset !important;
+}
+img.project-actiongrid-item {
+  width: 220px;
+  margin-top: 26px;
+  margin-left: -90px !important;
+  animation-duration: 5s;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-play-state: running;
+  animation-timing-function: ease-in-out;
+}
+#actiongrid-run,
+#actiongrid-share {
+  animation-name: spectro4;
+}
+#actiongrid-save {
+  animation-name: spectro42;
+}
+#login-screen .buttons-list {
+  margin: 0px 20px 0px 20px
+}
+#login-screen .buttons-list ul {
+  padding: 0;
+  list-style: none;
+}
+#login-screen .buttons-list button {
+  margin: 10px 0px
+}
+#login-screen .buttons-list .icon {
+  margin-right: 10px;
+}
+
+#editorWorkspace > *{
+  margin: 10px 0;
+}
+#language_select {
+  border-radius: 2px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #AAA;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+#name_input{
+  border-radius: 2px;
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #AAA;
+  padding-left: 2px;
+}
+
+@keyframes spectro4 {
+  0% {
+      filter:hue-rotate(180deg)
+  }
+
+  100% {
+      filter:hue-rotate(-180deg)
+  }
+}
+@keyframes spectro42 {
+  0% {
+      filter:hue-rotate(359deg)
+  }
+
+  100% {
+      filter:hue-rotate(0deg)
+  }
+}
+@media screen and (max-width: 600px) {
+  .actions-modal {
+    width: calc(100% - 20px) !important;
+    border-radius: 16px !important;
+    left: 10px !important;
+    margin-left: unset !important;
+    overflow: unset !important;
+  }
+  .actions-group {
+    border-radius: 16px !important;
+    overflow: unset !important;
+  }
+  .actions-button {
+    overflow: unset !important;
+  }
+  img.project-actiongrid-item {
+    width: 120px;
+    margin-top: 26px;
+    margin-left: -36px !important;
+    overflow: unset !important;
+  }
+}
+
+#add-friend-popup {
+  top: auto;
+  bottom: 0;
+  height: 140px;
+}
+
+#add-friend-popup .list {
+  margin: 0
+}
+
+#add-friend-popup .block {
+  margin: 0
+}

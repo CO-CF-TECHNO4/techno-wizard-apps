@@ -1,0 +1,84 @@
+<template>
+  <div class="page" data-name="home">
+    <!-- Top Navbar -->
+    <div class="navbar navbar-large">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner">
+        <div class="left">
+          <a href="#" class="link icon-only panel-open" data-panel="left">
+            <i class="icon t4-icons if-not-md">menu</i>
+            <i class="icon material-icons if-md">menu</i>
+          </a>
+        </div>
+        <div class="title sliding popup-open" data-popup="#logcat">Techno Wizard</div>
+        <div class="right">
+          <a href="/editor/" class="link icon-only" data-panel="right">
+            <i class="icon t4-icons if-not-md">square_pencil</i>
+            <i class="icon material-icons if-md">create</i>
+          </a>
+        </div>
+        <div class="title-large">
+          <div class="title-large-text">Techno Wizard</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scrollable page content-->
+    <div class="page-content">
+      <div class="block block-strong">
+        <div class="block-title">Мої проєкти</div>
+        <div class="list">
+          <ul class="projects-list">
+
+          </ul>
+        </div>
+        
+        
+        <a class="button button-fill" @click=${openActionsGrid}>Дії</a>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+
+  import images from '../js/images.js'
+
+  export default (props, { $on, $t4, $el }) => {
+    let imageRun = images.runIcon()
+    let imageSave = images.saveIcon()
+    let imageShare = images.shareIcon()
+
+    let actionsGrid
+
+    const openActionsGrid = () => {
+      actionsGrid.open()
+    }
+
+    $on('pageInit', () => {
+      const gridButtons = [
+        [
+          {
+            icon: `<img class="project-actiongrid-item" id="actiongrid-run" src="${imageRun}" alt="Відтворити">`
+          },
+          {
+            icon: `<img class="project-actiongrid-item" id="actiongrid-save" src="${imageSave}" alt="Зберегти">`
+          },
+          {
+            icon: `<img class="project-actiongrid-item" id="actiongrid-share" src="${imageShare}" alt="Поділитись">`
+          },
+        ]
+      ]
+
+      actionsGrid = $t4.actions.create({ buttons: gridButtons, grid: true })
+
+
+    })
+
+    $on('pageBeforeRemove', () => {
+      actionsGrid.destroy();
+    })
+
+    return $render;
+  }
+
+</script>

@@ -1,0 +1,39 @@
+{
+  "cwd": "/Users/bitholdex/Documents/techno4/wizardfront.techno4.online",
+  "type": [
+    "cordova"
+  ],
+  "name": "Techno Wizard",
+  "framework": "core",
+  "template": "tabs",
+  "bundler": "vite",
+  "cssPreProcessor": false,
+  "theming": {
+    "customColor": true,
+    "color": "#37ac8b",
+    "darkTheme": true,
+    "iconFonts": true,
+    "fillBars": false
+  },
+  "customBuild": false,
+  "pkg": "wizardfront.techno4.online",
+  "cordova": {
+    "folder": "cordova",
+    "platforms": [
+      "ios",
+      "android",
+      "electron",
+      "osx"
+    ],
+    "plugins": [
+      "cordova-plugin-statusbar",
+      "cordova-plugin-keyboard",
+      "cordova-plugin-splashscreen",
+      "cordova-plugin-device",
+      "cordova-plugin-inappbrowser",
+      "cordova-plugin-file",
+      "cordova-plugin-media",
+      "cordova-plugin-safariviewcontroller"
+    ]
+  }
+}

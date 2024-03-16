@@ -1,0 +1,92 @@
+<template>
+<div class="page" data-name="about">
+  <div class="navbar">
+    <div class="navbar-bg"></div>
+    <div class="navbar-inner sliding">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="if-not-md">Back</span>
+        </a>
+      </div>
+      <div class="title">About</div>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="block-title">About My App</div>
+    <div class="block block-strong" id="editorWorkspace">
+      <h3>Обиріть мову</h3>
+      <select id="language_select" onchange=${languageSelect}>
+        <option value="javascript" selected>JavaScript</option>
+        <option value="html">HTML</option>
+        <option value="css">CSS</option>
+      </select>
+      <input type="text" name="name" id="name_input" placeholder="Введіть назву"/>
+      <div id="editorContainer">
+        <div id="editorTarget"></div>
+      </div>
+      <button class="button button-fill" @click=${createProj}>Save</button>
+    </div>
+    <div class="block block-strong">
+      <p>Fugiat perspiciatis excepturi, soluta quod non ullam deleniti. Nobis sint nemo consequuntur, fugiat. Eius perferendis animi autem incidunt vel quod tenetur nostrum, voluptate omnis quasi quidem illum consequuntur, a, quisquam.</p>
+      <p>Laudantium neque magnam vitae nemo quam commodi, in cum dolore obcaecati laborum, excepturi harum, optio qui, consequuntur? Obcaecati dolor sequi nesciunt culpa quia perspiciatis, reiciendis ex debitis, ut tenetur alias.</p>
+    </div>
+    <div class="block">
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni molestiae laudantium dignissimos est nobis delectus nemo ea alias voluptatum architecto, amet similique, saepe iste consectetur in repellat ut minus quibusdam!</p>
+      <p>Molestias et distinctio porro nesciunt ratione similique, magni doloribus, rerum nobis, aliquam quae reiciendis quasi modi. Nam a recusandae, fugiat in ea voluptates fuga eius, velit corrupti reprehenderit dignissimos consequatur!</p>
+      <p>Blanditiis, cumque quo adipisci. Molestiae, dolores dolorum quos doloremque ipsa ullam eligendi commodi deserunt doloribus inventore magni? Ea mollitia veniam nostrum nihil, iusto doloribus a at! Ea molestiae ullam delectus!</p>
+    </div>
+  </div>
+</div>
+</template>
+<script>
+import {EditorView, basicSetup} from "codemirror"
+import {javascript} from "@codemirror/lang-javascript"
+import {Compartment} from "@codemirror/state"
+import {htmlLanguage, html} from "@codemirror/lang-html"
+import {cssLanguage, css} from "@codemirror/lang-css"
+import wizardrobot from '../js/wizardrobot.js'
+
+export default (props, { $on, $t4, $el }) => {
+
+  let view
+  const languageConf = new Compartment
+  const languageSelect = () =>{
+    const lang = document.querySelector("#language_select").value
+    switch(lang){
+      case "javascript":
+        view.dispatch({effects: languageConf.reconfigure(javascript())})
+        break;
+      case "html":
+        view.dispatch({effects: languageConf.reconfigure(html())})
+        break;
+      case "css":
+        view.dispatch({effects: languageConf.reconfigure(css())})
+        break;
+      default:
+        console.log(lang + " not found")
+    }
+  }
+  let cmStyles = EditorView.theme({
+    "&": {height: "300px"},
+    ".cm-scroller": {overflow: "auto"}
+  })
+
+  const createProj = () =>{
+    const fileName=document.querySelector("#name_input").value
+    const fileType=document.querySelector("#language_select").value
+    //const content = view.state.doc.toString()
+    const content = "hello"
+    wizardrobot.createProj(fileType, fileName, content)
+  }
+
+  $on('pageInit', () => {
+      view = new EditorView({
+        extensions: [basicSetup, languageConf.of(javascript()), cmStyles],
+        parent: document.querySelector("#editorTarget")
+      })
+  })
+  
+  return $render;
+};
+</script>

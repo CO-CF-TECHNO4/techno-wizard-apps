@@ -1,0 +1,109 @@
+<template>
+  <div class="page" data-name="product">
+
+    <div class="popup" id="add-friend-popup">
+      <div class="view">
+        <div class="page">
+          <div class="navbar">
+            <div class="navbar-bg"></div>
+            <div class="navbar-inner sliding">
+              <div class="left">
+                <a href="#" class="popup-close">
+                  <i class="t4-icons">xmark</i>
+                </a>
+              </div>
+              <div class="title">Введіть ключ друга</div>
+            </div>
+          </div>
+          <div class="page-content">
+            <div class="list">
+              <ul>
+                <li class="item-content item-input item-input-outline">
+                  <div class="item-inner">
+                    <div class="item-input-wrap">
+                      <input type="text" name="friend-key" id="friend-key" />
+                      <span class="input-clear-button"></span>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="block">
+              <button class="button button-fill popup-close" @click=${addFriend}>Додати</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar">
+      <div class="navbar-bg"></div>
+      <div class="navbar-inner sliding">
+        <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="if-not-md">Back</span>
+          </a>
+        </div>
+        <div class="title"></div>
+      </div>
+    </div>
+    <div class="page-content">
+      <div class="block">
+        <div class="button button-fill popup-open" data-popup="#add-friend-popup">Додати друга</div>
+      </div>
+      <div class="list media-list list-outline-ios list-strong-ios list-dividers-ios">
+        <ul id="friends-list">
+
+        </ul>
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+  import wizardrobot from '../js/wizardrobot.js'
+
+  export default (props, { $, $on, $t4route, $store }) => {
+
+    $on('page:tabshow', () => {
+      wizardrobot.getFriends().then(() => {
+        renderFriends();
+      })
+    })
+
+    const renderFriends = () => {
+      let friends = $store.getters.frienship.value
+
+      $('#friends-list').empty()
+
+      friends.map(friend => {
+        $('#friends-list').append(getFriendCard(friend))
+      })
+    }
+
+    const getFriendCard = (friend) => {
+      return `<li>
+                <a class="item-link">
+                  <div class="item-content">
+                    <div class="item-media">
+                      <img src="" alt=""/>
+                    </div>
+                    <div class="item-inner">
+                      <div class="item-title-row">
+                        <div class="item-title">${friend.id}</div>
+                      </div>
+                      <div class="item-text">Info...</div>
+                    </div>
+                  </div>
+                </a>
+              </li>`
+    }
+
+    const addFriend = () => {
+      wizardrobot.addFriend($('#friend-key').val())
+      renderFriends()
+    }
+
+    return $render;
+  };
+</script>
